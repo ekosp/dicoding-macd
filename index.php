@@ -168,7 +168,7 @@
 
     </div>
 
-    <div id="analyzeContainer" style="max-width: 100%; margin: auto;" hidden>
+    <div id="analyzeContainer" style="max-width: 100%; margin: auto;" hidden="hidden">
         <h1 class="page-header">Analyse Image</h1>
 
         <div class="alert alert-success" role="alert">
@@ -178,7 +178,7 @@
 
         <button id="analyze-button" class="btn btn-lg btn-primary" onclick="processImage()">Analyze image</button>
 
-        <div  id="analyzeResult" style="width:1024px; display:table;" hidden>
+        <div  id="analyzeResult" style="width:1024px; display:table;" hidden="hidden">
             <div id="jsonOutput" style="width:600px; display:table-cell;">
                 Image Analyze Response:
                 <br><br>
@@ -192,7 +192,7 @@
             </div>
         </div>
 
-        <div id="finalResultDiv" class="alert alert-success" role="alert" hidden>
+        <div id="finalResultDiv" class="alert alert-success" role="alert" hidden="hidden">
             <p id="analyzeFinalResult" style="font-size: large; font-weight: bold; text-align: center; width:100%"></p>
         </div>
     </div>

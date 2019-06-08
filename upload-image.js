@@ -35,7 +35,8 @@ $(document).ready(function (e) {
       {
         $('#loading').hide();
         $('#uploadContainer').hide();
-        $('#analyzeContainer').attr('hidden', '');
+        $('#analyzeContainer').show();
+        $('#analyzeResult').hide();
 
         $('#inputImage').html(data);
       }
