@@ -178,22 +178,22 @@
 
         <button id="analyze-button" class="btn btn-lg btn-primary" onclick="processImage()">Analyze image</button>
 
-        <div class="scroll" id="analyzeResult" style="width:100%; display:table;">
+        <div class="scroll" id="analyzeResult" style="width:100%; display:table;" hidden="hidden">
             <div id="jsonOutput" style="width:600px; display:table-cell;">
                 Response:
                 <br><br>
                 <textarea id="responseTextArea" class="UIInput"
-                          style="width:580px; height:400px;"></textarea>
+                          style="width:50%; height:300px;"></textarea>
             </div>
-            <div id="imageDiv" style="width:420px; display:table-cell;">
+            <div id="imageDiv" style="width:50%; display:table-cell;">
                 Source image:
                 <br><br>
-                <img id="sourceImage" width="400" />
+                <img id="sourceImage" />
             </div>
         </div>
 
         <div id="finalResultDiv" class="alert alert-success" role="alert" hidden="hidden">
-            <p id="analyzeFinalResult"></p>
+            <p id="analyzeFinalResult" style="font-size: large; font-weight: bold; align-content: center; width:100%"></p>
         </div>
     </div>
 
