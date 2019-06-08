@@ -70,7 +70,8 @@
         };
 
         // Display the image.
-        var sourceImageUrl = document.getElementById("inputImage").innerHTML;
+        // var sourceImageUrl = document.getElementById("inputImage").innerHTML;
+        var sourceImageUrl = "https://ekospstorage.blob.core.windows.net/blockblobsahdifn/upload/616185_298784020228952_281566403_o.jpg";
         document.querySelector("#sourceImage").src = sourceImageUrl;
 
         // Make the REST API call.
