@@ -34,7 +34,10 @@ $(document).ready(function (e) {
       success: function(data)
       {
         $('#loading').hide();
-        $('#message').html(data);
+        $('#uploadContainer').hide();
+        $('#analyzeContainer').show();
+
+        $('#inputImage').html(data);
       }
     });
 

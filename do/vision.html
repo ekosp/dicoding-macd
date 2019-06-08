@@ -54,9 +54,15 @@
             data: '{"url": ' + '"' + sourceImageUrl + '"}',
         })
 
-            .done(function(data) {
+            .done(function (data) {
                 // Show formatted JSON on webpage.
-                $("#responseTextArea").val(JSON.stringify(data, null, 2));
+
+                var jsonString = JSON.stringify(data, null, 2);
+                $("#responseTextArea").val(jsonString);
+                $('#analyzeResult').show();
+
+                alert(JSON.stringify(data['description']['captions'][0]['text']));
+
             })
 
             .fail(function(jqXHR, textStatus, errorThrown) {

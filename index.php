@@ -12,6 +12,8 @@
     <link rel="icon" href="http://getbootstrap.com/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
     <style>body {
             padding-top: 50px;
         }
@@ -24,6 +26,18 @@
     <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <style>
+
+        div.scroll {
+            margin: 5px;
+            padding: 5px;
+            height: 300px;
+            overflow: auto;
+            background: #DBE4E1;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -56,10 +70,8 @@
         };
 
         // Display the image.
-        var sourceImageUrl = document.getElementById("inputImage").value;
-        // document.querySelector("#sourceImage").src = sourceImageUrl;
-
-        // var sourceImageUrl = "http://upload.wikimedia.org/wikipedia/commons/3/3c/Shaki_waterfall.jpg";
+        var sourceImageUrl = document.getElementById("inputImage").innerHTML;
+        document.querySelector("#sourceImage").src = sourceImageUrl;
 
         // Make the REST API call.
         $.ajax({
@@ -80,7 +92,15 @@
 
             .done(function (data) {
                 // Show formatted JSON on webpage.
-                $("#responseTextArea").val(JSON.stringify(data, null, 2));
+
+                var jsonString = JSON.stringify(data, null, 2);
+                $("#responseTextArea").val(jsonString);
+                $('#analyzeResult').show();
+
+
+                $('#finalResultDiv').show();
+                $('#analyzeFinalResult').html(JSON.stringify(data['description']['captions'][0]['text']));
+
             })
 
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -94,113 +114,6 @@
     };
 </script>
 
-<?php
-
-require_once 'vendor/autoload.php';
-require_once "random_string.php";
-
-use MicrosoftAzure\Storage\Blob\BlobRestProxy;
-use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
-use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
-use MicrosoftAzure\Storage\Blob\Models\CreateContainerOptions;
-use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
-
-//$connectionString = "DefaultEndpointsProtocol=https;AccountName=".getenv('ACCOUNT_NAME').";AccountKey=".getenv('ACCOUNT_KEY');
-$connectionString = "DefaultEndpointsProtocol=https;AccountName=ekospstorage;AccountKey=kFS9qE3paueUy/nVVyuTMKB9u73OPM6yOKW/G6GZ2BDi6D9fhnntYqJ6MAVhIQpY9Zqi8ToiGC+rSQd18wGQ6w==";
-
-// Create blob client.
-$blobClient = BlobRestProxy::createBlobService($connectionString);
-
-if (isset($_FILES["file"])) {
-    // Create container options object.
-    $createContainerOptions = new CreateContainerOptions();
-
-    $fileToUpload = $_FILES["file"]["tmp_name"];
-
-    // Set public access policy. Possible values are
-    // PublicAccessType::CONTAINER_AND_BLOBS and PublicAccessType::BLOBS_ONLY.
-    // CONTAINER_AND_BLOBS:
-    // Specifies full public read access for container and blob data.
-    // proxys can enumerate blobs within the container via anonymous
-    // request, but cannot enumerate containers within the storage account.
-    //
-    // BLOBS_ONLY:
-    // Specifies public read access for blobs. Blob data within this
-    // container can be read via anonymous request, but container data is not
-    // available. proxys cannot enumerate blobs within the container via
-    // anonymous request.
-    // If this value is not specified in the request, container data is
-    // private to the account owner.
-
-    $createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
-
-// Set container metadata.
-// $createContainerOptions->addMetaData("key1", "value1");
-// $createContainerOptions->addMetaData("key2", "value2");
-
-    $containerName = "blockblobs" . generateRandomString();
-
-    try {
-// Create container.
-        $blobClient->createContainer($containerName, $createContainerOptions);
-
-// Getting local file so that we can upload it to Azure
-// $myfile = fopen($fileToUpload, "w") or die("Unable to open file!");
-// fclose($myfile);
-
-# Upload file as a block blob
-        echo "Uploading BlockBlob: " . PHP_EOL;
-        echo $fileToUpload;
-        echo "<br/>";
-
-        $content = fopen($fileToUpload, "r");
-
-//Upload blob
-        $blobClient->createBlockBlob($containerName, $fileToUpload, $content);
-
-// List blobs.
-        $listBlobsOptions = new ListBlobsOptions();
-        $listBlobsOptions->setPrefix("HelloWorld");
-
-        echo "These are the blobs present in the container: ";
-
-        do {
-            $result = $blobClient->listBlobs($containerName, $listBlobsOptions);
-            foreach ($result->getBlobs() as $blob) {
-                echo $blob->getName() . ": " . $blob->getUrl() . "<br/>";
-            }
-
-            $listBlobsOptions->setContinuationToken($result->getContinuationToken());
-        } while ($result->getContinuationToken());
-        echo "<br/>";
-
-// Get blob.
-        echo "This is the content of the blob uploaded: ";
-        $blob = $blobClient->getBlob($containerName, $fileToUpload);
-
-// header("Content-Type:image/jpeg");
-// header('Content-Disposition: attachment; filename="' . $blob_name . '"');
-
-        fpassthru($blob->getContentStream());
-        echo "<br/>";
-    } catch (ServiceException $e) {
-// Handle exception based on error codes and messages.
-// Error codes and messages are here:
-// http://msdn.microsoft.com/library/azure/dd179439.aspx
-        $code = $e->getCode();
-        $error_message = $e->getMessage();
-        echo $code . ": " . $error_message . "<br/>";
-    } catch (InvalidArgumentTypeException $e) {
-// Handle exception based on error codes and messages.
-// Error codes and messages are here:
-// http://msdn.microsoft.com/library/azure/dd179439.aspx
-        $code = $e->getCode();
-        $error_message = $e->getMessage();
-        echo $code . ": " . $error_message . "<br/>";
-    }
-}
-
-?>
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -216,11 +129,7 @@ if (isset($_FILES["file"])) {
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Live demo</a></li>
-                <!--<li><a target="_blank" href="https://github.com/ShinDarth/Bootstrap-image-upload-form/blob/master/index.html">index.php</a></li>-->
-                <!--<li><a target="_blank" href="https://github.com/ShinDarth/Bootstrap-image-upload-form/blob/master/upload-image.js">upload-image.js</a></li>-->
-                <!--<li><a target="_blank" href="https://github.com/ShinDarth/Bootstrap-image-upload-form/blob/master/upload-image.php">upload-image.php</a></li>-->
-                <!--<li><a target="_blank" href="https://github.com/ShinDarth/Bootstrap-image-upload-form/archive/master.zip">Download  full source code</a></li>-->
+                <li><a href="<?php $_SERVER['PHP_SELF'] ?>">Upload New Image</a></li>
             </ul>
         </div><!--.nav-collapse -->
     </div>
@@ -228,8 +137,8 @@ if (isset($_FILES["file"])) {
 
 <div class="container">
 
-    <div style="max-width: 650px; margin: auto;">
-        <h1 class="page-header">Upload and Analyse Image</h1>
+    <div id="uploadContainer" style="max-width: 100%; margin: auto;">
+        <h1 class="page-header">Upload Image</h1>
         <p class="lead">Select a PNG or JPEG image, having maximum size <span id="max-size"></span> KB.</p>
 
         <form id="upload-image-form" action="" method="post" enctype="multipart/form-data">
@@ -238,9 +147,6 @@ if (isset($_FILES["file"])) {
                 <br>
                 <img id="preview-img" src="noimage">
             </div>
-
-            <!--<input type="text" name="inputImage" id="inputImage" hidden="hidden"-->
-            <!--value="http://upload.wikimedia.org/wikipedia/commons/3/3c/Shaki_waterfall.jpg" />-->
 
             <div class="form-group">
                 <input type="file" name="file" id="file" required>
@@ -251,31 +157,49 @@ if (isset($_FILES["file"])) {
         </form>
 
         <br>
-        <!--        <div class="alert alert-info" id="loading" style="display: none;" role="alert">-->
-        <!--            Uploading image...-->
-        <!--            <div class="progress">-->
-        <!--                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45"-->
-        <!--                     aria-valuemin="0" aria-valuemax="100" style="width: 100%">-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--        <div id="message"></div>-->
-        <!---->
-        <!--        <div id="jsonOutput" style="width:600px; display:table-cell;">-->
-        <!--            Response:-->
-        <!--            <br><br>-->
-        <!--            <textarea id="responseTextArea" class="UIInput"-->
-        <!--                      style="width:580px; height:400px;"></textarea>-->
-        <!--        </div>-->
+        <div class="alert alert-info" id="loading" style="display: none;" role="alert">
+            Uploading image...
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45"
+                     aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                </div>
+            </div>
+        </div>
 
     </div>
 
-    <!--<a target="_blank" href="https://github.com/ShinDarth/Bootstrap-image-upload-form"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>-->
+    <div id="analyzeContainer" style="max-width: 100%; margin: auto;" hidden="hidden">
+        <h1 class="page-header">Analyse Image</h1>
+
+        <div class="alert alert-success" role="alert">
+            <p>Image uploaded successful to : </p>
+            <p id="inputImage"></p>
+        </div>
+
+        <button id="analyze-button" class="btn btn-lg btn-primary" onclick="processImage()">Analyze image</button>
+
+        <div class="scroll" id="analyzeResult" style="width:100%; display:table;">
+            <div id="jsonOutput" style="width:600px; display:table-cell;">
+                Response:
+                <br><br>
+                <textarea id="responseTextArea" class="UIInput"
+                          style="width:580px; height:400px;"></textarea>
+            </div>
+            <div id="imageDiv" style="width:420px; display:table-cell;">
+                Source image:
+                <br><br>
+                <img id="sourceImage" width="400" />
+            </div>
+        </div>
+
+        <div id="finalResultDiv" class="alert alert-success" role="alert" hidden="hidden">
+            <p id="analyzeFinalResult"></p>
+        </div>
+    </div>
 
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<!--<script src="upload-image.js"></script>-->
+<script src="upload-image.js"></script>
 </body>
 </html>
