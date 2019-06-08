@@ -168,7 +168,7 @@
 
     </div>
 
-    <div id="analyzeContainer" style="max-width: 100%; margin: auto;" hidden="hidden">
+    <div id="analyzeContainer" style="max-width: 100%; margin: auto;" hidden>
         <h1 class="page-header">Analyse Image</h1>
 
         <div class="alert alert-success" role="alert">
@@ -178,22 +178,22 @@
 
         <button id="analyze-button" class="btn btn-lg btn-primary" onclick="processImage()">Analyze image</button>
 
-        <div class="scroll" id="analyzeResult" style="width:100%; display:table;" hidden="hidden">
+        <div  id="analyzeResult" style="width:1024px; display:table;" hidden>
             <div id="jsonOutput" style="width:600px; display:table-cell;">
-                Response:
+                Image Analyze Response:
                 <br><br>
                 <textarea id="responseTextArea" class="UIInput"
-                          style="width:50%; height:300px;"></textarea>
+                          style="width:580px; height:300px;"></textarea>
             </div>
-            <div id="imageDiv" style="width:50%; display:table-cell;">
-                Source image:
+            <div id="imageDiv" style="width:420px; display:table-cell;">
+                Image From Azure Storage:
                 <br><br>
-                <img id="sourceImage" />
+                <img id="sourceImage" width="400" />
             </div>
         </div>
 
-        <div id="finalResultDiv" class="alert alert-success" role="alert" hidden="hidden">
-            <p id="analyzeFinalResult" style="font-size: large; font-weight: bold; align-content: center; width:100%"></p>
+        <div id="finalResultDiv" class="alert alert-success" role="alert" hidden>
+            <p id="analyzeFinalResult" style="font-size: large; font-weight: bold; text-align: center; width:100%"></p>
         </div>
     </div>
 
