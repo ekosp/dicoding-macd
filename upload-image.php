@@ -47,7 +47,7 @@ if (isset($_FILES["file"]["type"])) {
 
 function uploadBlob($fileToUpload)
 {
-    $connectionString = "DefaultEndpointsProtocol=https;AccountName=ekospstorage;AccountKey=kFS9qE3paueUy/nVVyuTMKB9u73OPM6yOKW/G6GZ2BDi6D9fhnntYqJ6MAVhIQpY9Zqi8ToiGC+rSQd18wGQ6w==";
+    $connectionString = "DefaultEndpointsProtocol=https;AccountName=ekospstrg;AccountKey=dLG+s3PjRlE0rOPpyCS7gVAoB/cDnGdB8cXZD3U0PCnR3/rOOq7A0Lf1Dw+Bh0V6b8v6wDgURi6s7219Hh9HzA==";
     $blobClient = BlobRestProxy::createBlobService($connectionString);
     $createContainerOptions = new CreateContainerOptions();
     $createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);

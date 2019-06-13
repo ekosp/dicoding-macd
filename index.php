@@ -49,7 +49,7 @@
         // **********************************************
 
         // Replace <Subscription Key> with your valid subscription key.
-        var subscriptionKey = "8a703d408438442db192816f733663c8";
+        var subscriptionKey = "cf68e3b37547495390eec297e005b6b0";
 
         // You must use the same Azure region in your REST API method as you used to
         // get your subscription keys. For example, if you got your subscription keys
@@ -70,8 +70,8 @@
         };
 
         // Display the image.
-        // var sourceImageUrl = document.getElementById("inputImage").innerHTML;
-        var sourceImageUrl = "https://ekospstorage.blob.core.windows.net/blockblobsahdifn/upload/616185_298784020228952_281566403_o.jpg";
+        var sourceImageUrl = document.getElementById("inputImage").innerHTML;
+        // var sourceImageUrl = "https://ekospstorage.blob.core.windows.net/blockblobsahdifn/upload/616185_298784020228952_281566403_o.jpg";
         document.querySelector("#sourceImage").src = sourceImageUrl;
 
         // Make the REST API call.
