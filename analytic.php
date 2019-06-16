@@ -15,12 +15,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <style>body {
-            padding-top: 50px;
+    padding-top: 50px;
         }
 
         .navbar-inverse .navbar-nav > li > a {
-            color: #DBE4E1;
-        }</style>
+    color: #DBE4E1;
+}</style>
 
     <!--[if IE]>
     <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -29,8 +29,8 @@
 
     <style>
 
-        div.scroll {
-            margin: 5px;
+div.scroll {
+    margin: 5px;
             padding: 5px;
             height: 300px;
             overflow: auto;
@@ -80,10 +80,10 @@
 
             // Request headers.
             beforeSend: function (xhrObj) {
-                xhrObj.setRequestHeader("Content-Type", "application/json");
-                xhrObj.setRequestHeader(
-                    "Ocp-Apim-Subscription-Key", subscriptionKey);
-            },
+            xhrObj.setRequestHeader("Content-Type", "application/json");
+            xhrObj.setRequestHeader(
+                "Ocp-Apim-Subscription-Key", subscriptionKey);
+        },
 
             type: "POST",
 
@@ -92,26 +92,26 @@
         })
 
             .done(function (data) {
-                // Show formatted JSON on webpage.
+            // Show formatted JSON on webpage.
 
-                var jsonString = JSON.stringify(data, null, 2);
-                $("#responseTextArea").val(jsonString);
-                $('#analyzeResult').show();
+            var jsonString = JSON.stringify(data, null, 2);
+            $("#responseTextArea").val(jsonString);
+            $('#analyzeResult').show();
 
 
-                $('#finalResultDiv').show();
-                $('#analyzeFinalResult').html(JSON.stringify(data['description']['captions'][0]['text']));
+            $('#finalResultDiv').show();
+            $('#analyzeFinalResult').html(JSON.stringify(data['description']['captions'][0]['text']));
 
-            })
+        })
 
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                // Display error message.
-                var errorString = (errorThrown === "") ? "Error. " :
-                    errorThrown + " (" + jqXHR.status + "): ";
-                errorString += (jqXHR.responseText === "") ? "" :
-                    jQuery.parseJSON(jqXHR.responseText).message;
-                alert(errorString);
-            });
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            // Display error message.
+            var errorString = (errorThrown === "") ? "Error. " :
+                errorThrown + " (" + jqXHR.status + "): ";
+            errorString += (jqXHR.responseText === "") ? "" :
+                jQuery.parseJSON(jqXHR.responseText).message;
+            alert(errorString);
+        });
     };
 </script>
 
@@ -138,62 +138,31 @@
 
 <div class="container">
 
-    <div id="uploadContainer" style="max-width: 100%; margin: auto;">
-        <h1 class="page-header">Upload Image</h1>
-        <p class="lead">Select a PNG or JPEG image, having maximum size <span id="max-size"></span> KB.</p>
-
-        <form id="upload-image-form" action="" method="post" enctype="multipart/form-data">
-            <div id="image-preview-div" style="display: none">
-                <label>Selected image:</label>
-                <br>
-                <img id="preview-img" src="noimage">
-            </div>
-
-            <div class="form-group">
-                <input type="file" name="file" id="file" required>
-            </div>
-            <button class="btn btn-lg btn-primary" id="upload-button" type="submit">
-                Upload image
-            </button>
-        </form>
-
-        <br>
-        <div class="alert alert-info" id="loading" style="display: none;" role="alert">
-            Uploading image...
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45"
-                     aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="analyzeContainer" style="max-width: 100%; margin: auto;" hidden="hidden">
+    <div id="analyzeContainer" style="max-width: 100%; margin: auto;" >
         <h1 class="page-header">Analyse Image</h1>
 
         <div class="alert alert-success" role="alert">
             <p>Image uploaded successful to : </p>
-            <p id="inputImage"></p>
+            <p id="inputImage"><?php echo htmlspecialchars($_GET["url"]); ?></p>
         </div>
 
         <button id="analyze-button" class="btn btn-lg btn-primary" onclick="processImage()">Analyze image</button>
 
-        <div  id="analyzeResult" style="width:1024px; display:table;" hidden="hidden">
+        <div  id="analyzeResult" style="width:1024px; display:table;" >
             <div id="jsonOutput" style="width:600px; display:table-cell;">
-                Image Analyze Response:
+    Image Analyze Response:
                 <br><br>
                 <textarea id="responseTextArea" class="UIInput"
                           style="width:580px; height:300px;"></textarea>
             </div>
             <div id="imageDiv" style="width:420px; display:table-cell;">
-                Image From Azure Storage:
+    Image From Azure Storage:
                 <br><br>
                 <img id="sourceImage" width="400" />
             </div>
         </div>
 
-        <div id="finalResultDiv" class="alert alert-success" role="alert" hidden="hidden">
+        <div id="finalResultDiv" class="alert alert-success" role="alert" >
             <p id="analyzeFinalResult" style="font-size: large; font-weight: bold; text-align: center; width:100%"></p>
         </div>
     </div>

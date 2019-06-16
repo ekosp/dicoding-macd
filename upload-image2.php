@@ -14,7 +14,7 @@ use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
 use MicrosoftAzure\Storage\Blob\Models\CreateContainerOptions;
 use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
 
-if (isset($_FILES["file"]["type"])) {
+if (isset($_FILES["file"])) {
     $max_size = 500 * 1024; // 500 KB
 //    $destination_directory = "upload/";
     $validextensions = array("jpeg", "jpg", "png");
@@ -46,8 +46,7 @@ if (isset($_FILES["file"]["type"])) {
 
 function uploadBlob($fileToUpload)
 {
-
-    echo "upload_blob";
+//    echo "upload_blob";
 
     $connectionString = "DefaultEndpointsProtocol=https;AccountName=ekospstrg;AccountKey=dLG+s3PjRlE0rOPpyCS7gVAoB/cDnGdB8cXZD3U0PCnR3/rOOq7A0Lf1Dw+Bh0V6b8v6wDgURi6s7219Hh9HzA==";
     $blobClient = BlobRestProxy::createBlobService($connectionString);
@@ -69,7 +68,11 @@ function uploadBlob($fileToUpload)
         do {
             $result = $blobClient->listBlobs($containerName, $listBlobsOptions);
             foreach ($result->getBlobs() as $blob) {
-                echo $blob->getUrl();
+//                echo $blob->getUrl();
+
+                // redirect to analytic page
+                header("Location: analytic.php?url=".$blob->getUrl()); /* Redirect browser */
+                exit();
             }
 
             $listBlobsOptions->setContinuationToken($result->getContinuationToken());
