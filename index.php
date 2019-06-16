@@ -142,7 +142,7 @@
         <h1 class="page-header">Upload Image</h1>
         <p class="lead">Select a PNG or JPEG image, having maximum size <span id="max-size"></span> KB.</p>
 
-        <form id="upload-image-form" action="" method="post" enctype="multipart/form-data">
+        <form id="upload-image-form" action="upload-image.php" method="post" enctype="multipart/form-data">
             <div id="image-preview-div" style="display: none">
                 <label>Selected image:</label>
                 <br>

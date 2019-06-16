@@ -24,23 +24,23 @@ $(document).ready(function (e) {
     $('#message').empty();
     $('#loading').show();
 
-    $.ajax({
-      url: "upload-image.php",
-      type: "POST",
-      data: new FormData(this),
-      contentType: false,
-      cache: false,
-      processData: false,
-      success: function(data)
-      {
-        $('#loading').hide();
-        $('#uploadContainer').hide();
-        $('#analyzeContainer').show();
-        $('#analyzeResult').hide();
-
-        $('#inputImage').html(data);
-      }
-    });
+    // $.ajax({
+    //   url: "upload-image.php",
+    //   type: "POST",
+    //   data: new FormData(this),
+    //   contentType: false,
+    //   cache: false,
+    //   processData: false,
+    //   success: function(data)
+    //   {
+    //     $('#loading').hide();
+    //     $('#uploadContainer').hide();
+    //     $('#analyzeContainer').show();
+    //     $('#analyzeResult').hide();
+    //
+    //     $('#inputImage').html(data);
+    //   }
+    // });
 
   });
 
