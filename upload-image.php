@@ -12,7 +12,7 @@ use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
 
 if (isset($_FILES["file"]["type"])) {
     $max_size = 500 * 1024; // 500 KB
-    $destination_directory = "upload/";
+//    $destination_directory = "upload/";
     $validextensions = array("jpeg", "jpg", "png");
 
     $temporary = explode(".", $_FILES["file"]["name"]);
@@ -32,10 +32,14 @@ if (isset($_FILES["file"]["type"])) {
 //                } else {
                     $sourcePath = $_FILES["file"]["tmp_name"];
 //                    $targetPath = $destination_directory . $_FILES["file"]["name"];
-                    $targetPath = $destination_directory . "HelloWorld.".pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
-                    move_uploaded_file($sourcePath, $targetPath);
+//                    $targetPath = $destination_directory . "HelloWorld.".pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
+//                    move_uploaded_file($sourcePath, $targetPath);
 
-                    uploadBlob($targetPath);
+//                $sourcePath = $_FILES["file"]["name"];
+//                    echo $targetPath;
+//                    uploadBlob($targetPath);
+
+                    uploadBlob($sourcePath);
                 }
 //            }
         } else {
@@ -57,10 +61,16 @@ function uploadBlob($fileToUpload)
     try {
         $blobClient->createContainer($containerName, $createContainerOptions);
 
+//        $myfile = fopen($fileToUpload, "w") or die("Unable to open file!");
+//        fclose($myfile);
+
         $content = fopen($fileToUpload, "r");
 
+//        $content = file_get_contents($fileToUpload);
+//        $content =addslashes (file_get_contents($fileToUpload));
+
         //Upload blob
-        $blobClient->createBlockBlob($containerName, $fileToUpload, $content);
+            $blobClient->createBlockBlob($containerName, "dasdasdasda", $content);
 
         // List blobs.
         $listBlobsOptions = new ListBlobsOptions();
