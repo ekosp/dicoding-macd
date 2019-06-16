@@ -27,16 +27,17 @@ if (isset($_FILES["file"]["type"])) {
             if ($_FILES["file"]["error"] > 0) {
                 echo "<div class=\"alert alert-danger\" role=\"alert\">Error: <strong>" . $_FILES["file"]["error"] . "</strong></div>";
             } else {
-                if (file_exists($destination_directory . $_FILES["file"]["name"])) {
-                    echo "<div class=\"alert alert-danger\" role=\"alert\">Error: File <strong>" . $_FILES["file"]["name"] . "</strong> already exists.</div>";
-                } else {
+//                if (file_exists($destination_directory . $_FILES["file"]["name"])) {
+//                    echo "<div class=\"alert alert-danger\" role=\"alert\">Error: File <strong>" . $_FILES["file"]["name"] . "</strong> already exists.</div>";
+//                } else {
                     $sourcePath = $_FILES["file"]["tmp_name"];
-                    $targetPath = $destination_directory . $_FILES["file"]["name"];
+//                    $targetPath = $destination_directory . $_FILES["file"]["name"];
+                    $targetPath = $destination_directory . "HelloWorld.".pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
                     move_uploaded_file($sourcePath, $targetPath);
 
                     uploadBlob($targetPath);
                 }
-            }
+//            }
         } else {
             echo "<div class=\"alert alert-danger\" role=\"alert\">The size of image you are attempting to upload is " . round($_FILES["file"]["size"] / 1024, 2) . " KB, maximum size allowed is " . round($max_size / 1024, 2) . " KB</div>";
         }

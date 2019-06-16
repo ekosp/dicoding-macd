@@ -42,13 +42,13 @@ use MicrosoftAzure\Storage\Blob\Models\CreateContainerOptions;
 use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
 
 //$connectionString = "DefaultEndpointsProtocol=https;AccountName=".getenv('ACCOUNT_NAME').";AccountKey=".getenv('ACCOUNT_KEY');
-$connectionString = "DefaultEndpointsProtocol=https;AccountName=ekospstorage;AccountKey=kFS9qE3paueUy/nVVyuTMKB9u73OPM6yOKW/G6GZ2BDi6D9fhnntYqJ6MAVhIQpY9Zqi8ToiGC+rSQd18wGQ6w==";
+$connectionString = "DefaultEndpointsProtocol=https;AccountName=ekospstrg;AccountKey=dLG+s3PjRlE0rOPpyCS7gVAoB/cDnGdB8cXZD3U0PCnR3/rOOq7A0Lf1Dw+Bh0V6b8v6wDgURi6s7219Hh9HzA==";
 
 // Create blob client.
 $blobClient = BlobRestProxy::createBlobService($connectionString);
 
-$fileToUpload = "HelloWorld.txt";
-//$fileToUpload = "mountain.jpg";
+//$fileToUpload = "HelloWorld.txt";
+$fileToUpload = "HelloWorld.jpg";
 
 if (!isset($_GET["Cleanup"])) {
     // Create container options object.
