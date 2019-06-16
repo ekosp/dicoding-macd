@@ -12,17 +12,17 @@ function selectImage(e) {
 }
 
 $(document).ready(function (e) {
-
+//
   var maxsize = 500 * 1024; // 500 KB
-
+//
   $('#max-size').html((maxsize/1024).toFixed(2));
-
-  $('#upload-image-form').on('submit', function(e) {
-
-    e.preventDefault();
-
-    $('#message').empty();
-    $('#loading').show();
+//
+//   $('#upload-image-form').on('submit', function(e) {
+//
+//     e.preventDefault();
+//
+//     $('#message').empty();
+//     $('#loading').show();
 
     // $.ajax({
     //   url: "upload-image.php",
@@ -42,7 +42,7 @@ $(document).ready(function (e) {
     //   }
     // });
 
-  });
+  // });
 
   $('#file').change(function() {
 

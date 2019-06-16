@@ -15,12 +15,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <style>body {
-    padding-top: 50px;
+            padding-top: 50px;
         }
 
         .navbar-inverse .navbar-nav > li > a {
-    color: #DBE4E1;
-}</style>
+            color: #DBE4E1;
+        }</style>
 
     <!--[if IE]>
     <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -29,8 +29,8 @@
 
     <style>
 
-div.scroll {
-    margin: 5px;
+        div.scroll {
+            margin: 5px;
             padding: 5px;
             height: 300px;
             overflow: auto;
@@ -80,10 +80,10 @@ div.scroll {
 
             // Request headers.
             beforeSend: function (xhrObj) {
-            xhrObj.setRequestHeader("Content-Type", "application/json");
-            xhrObj.setRequestHeader(
-                "Ocp-Apim-Subscription-Key", subscriptionKey);
-        },
+                xhrObj.setRequestHeader("Content-Type", "application/json");
+                xhrObj.setRequestHeader(
+                    "Ocp-Apim-Subscription-Key", subscriptionKey);
+            },
 
             type: "POST",
 
@@ -92,26 +92,26 @@ div.scroll {
         })
 
             .done(function (data) {
-            // Show formatted JSON on webpage.
+                // Show formatted JSON on webpage.
 
-            var jsonString = JSON.stringify(data, null, 2);
-            $("#responseTextArea").val(jsonString);
-            $('#analyzeResult').show();
+                var jsonString = JSON.stringify(data, null, 2);
+                $("#responseTextArea").val(jsonString);
+                $('#analyzeResult').show();
 
 
-            $('#finalResultDiv').show();
-            $('#analyzeFinalResult').html(JSON.stringify(data['description']['captions'][0]['text']));
+                $('#finalResultDiv').show();
+                $('#analyzeFinalResult').html(JSON.stringify(data['description']['captions'][0]['text']));
 
-        })
+            })
 
-        .fail(function (jqXHR, textStatus, errorThrown) {
-            // Display error message.
-            var errorString = (errorThrown === "") ? "Error. " :
-                errorThrown + " (" + jqXHR.status + "): ";
-            errorString += (jqXHR.responseText === "") ? "" :
-                jQuery.parseJSON(jqXHR.responseText).message;
-            alert(errorString);
-        });
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                // Display error message.
+                var errorString = (errorThrown === "") ? "Error. " :
+                    errorThrown + " (" + jqXHR.status + "): ";
+                errorString += (jqXHR.responseText === "") ? "" :
+                    jQuery.parseJSON(jqXHR.responseText).message;
+                alert(errorString);
+            });
     };
 </script>
 
@@ -130,7 +130,8 @@ div.scroll {
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="<?php $_SERVER['PHP_SELF'] ?>">Upload New Image</a></li>
+                <!--                <li><a href="--><?php //$_SERVER['PHP_SELF'] ?><!--">Upload New Image</a></li>-->
+                <li><a href="index.php">Upload New Image</a></li>
             </ul>
         </div><!--.nav-collapse -->
     </div>
@@ -138,7 +139,7 @@ div.scroll {
 
 <div class="container">
 
-    <div id="analyzeContainer" style="max-width: 100%; margin: auto;" >
+    <div id="analyzeContainer" style="max-width: 100%; margin: auto;">
         <h1 class="page-header">Analyse Image</h1>
 
         <div class="alert alert-success" role="alert">
@@ -148,24 +149,27 @@ div.scroll {
 
         <button id="analyze-button" class="btn btn-lg btn-primary" onclick="processImage()">Analyze image</button>
 
-        <div  id="analyzeResult" style="width:1024px; display:table;" >
-            <div id="jsonOutput" style="width:600px; display:table-cell;">
-    Image Analyze Response:
-                <br><br>
-                <textarea id="responseTextArea" class="UIInput"
-                          style="width:580px; height:300px;"></textarea>
-            </div>
-            <div id="imageDiv" style="width:420px; display:table-cell;">
-    Image From Azure Storage:
-                <br><br>
-                <img id="sourceImage" width="400" />
-            </div>
+        <div id="analyzeResult" style="width:1024px; hidden=" hidden
+        ">
+        <div id="jsonOutput" style="width:600px; display:table-cell;">
+            Image Analyze Response:
+            <br><br>
+            <textarea id="responseTextArea" class="UIInput"
+                      style="width:580px; height:300px;"></textarea>
+        </div>
+        <div id="imageDiv" style="width:420px; display:table-cell;">
+            Image From Azure Storage:
+            <br><br>
+            <img id="sourceImage" width="400"/>
         </div>
 
         <div id="finalResultDiv" class="alert alert-success" role="alert" >
             <p id="analyzeFinalResult" style="font-size: large; font-weight: bold; text-align: center; width:100%"></p>
         </div>
+
     </div>
+
+</div>
 
 </div>
 

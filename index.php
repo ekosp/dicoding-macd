@@ -142,7 +142,7 @@
         <h1 class="page-header">Upload Image</h1>
         <p class="lead">Select a PNG or JPEG image, having maximum size <span id="max-size"></span> KB.</p>
 
-        <form id="upload-image-form" action="" method="post" enctype="multipart/form-data">
+        <form id="upload-image-form" action="upload-image.php" method="post" enctype="multipart/form-data">
             <div id="image-preview-div" style="display: none">
                 <label>Selected image:</label>
                 <br>
@@ -157,46 +157,18 @@
             </button>
         </form>
 
-        <br>
-        <div class="alert alert-info" id="loading" style="display: none;" role="alert">
-            Uploading image...
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45"
-                     aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                </div>
-            </div>
-        </div>
+        <!--        <br>-->
+        <!--        <div class="alert alert-info" id="loading" style="display: none;" role="alert">-->
+        <!--            Uploading image...-->
+        <!--            <div class="progress">-->
+        <!--                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45"-->
+        <!--                     aria-valuemin="0" aria-valuemax="100" style="width: 100%">-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
     </div>
 
-    <div id="analyzeContainer" style="max-width: 100%; margin: auto;" hidden="hidden">
-        <h1 class="page-header">Analyse Image</h1>
-
-        <div class="alert alert-success" role="alert">
-            <p>Image uploaded successful to : </p>
-            <p id="inputImage"></p>
-        </div>
-
-        <button id="analyze-button" class="btn btn-lg btn-primary" onclick="processImage()">Analyze image</button>
-
-        <div  id="analyzeResult" style="width:1024px; display:table;" hidden="hidden">
-            <div id="jsonOutput" style="width:600px; display:table-cell;">
-                Image Analyze Response:
-                <br><br>
-                <textarea id="responseTextArea" class="UIInput"
-                          style="width:580px; height:300px;"></textarea>
-            </div>
-            <div id="imageDiv" style="width:420px; display:table-cell;">
-                Image From Azure Storage:
-                <br><br>
-                <img id="sourceImage" width="400" />
-            </div>
-        </div>
-
-        <div id="finalResultDiv" class="alert alert-success" role="alert" hidden="hidden">
-            <p id="analyzeFinalResult" style="font-size: large; font-weight: bold; text-align: center; width:100%"></p>
-        </div>
-    </div>
 
 </div>
 
